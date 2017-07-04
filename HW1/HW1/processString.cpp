@@ -50,15 +50,17 @@ int main(int argc, char*argv[]) {
 
 TEST(getAscendingStr, SimpleAscending)
 {//Simple ascending test case
-	string inputStr = "1 3 2 4 5";
+
+	string inputStr = "1 -3 2195 4 50";
 	string tmpStr = inputStr;
-	getAscendingStr(tmpStr);
-	EXPECT_EQ(tmpStr, "1 2 3 4 5");
+	int err = getAscendingStr(tmpStr);
+	EXPECT_EQ(tmpStr, "-3 1 4 50 2195");
+	EXPECT_EQ(err, 0);
 }
 
 TEST(getAscendingStr, handleNonDigit)
 {//getAscendingStr function should handle non digit case
-	string tmpStr = "1 3 2 4 a";
+	string tmpStr = "1 3 2 4 a 7f415";
 	int err = getAscendingStr(tmpStr);
 	EXPECT_EQ(err, -1);
 }
