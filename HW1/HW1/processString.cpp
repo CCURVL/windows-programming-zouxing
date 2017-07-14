@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 #include <string>
+#include <sstream>
 #include <vector>
+#include <algorithm>
 
 #include <gtest\gtest.h>
 
@@ -16,9 +18,54 @@ using namespace std;
 //       -1 if exception occur (ex. string containing non-digit character)
 int getAscendingStr(string& inputStr)
 {
-	
 	/// Please fill your code here
 
+	int arr[10];
+	int subStringCnt =0;
+	//double d;
+	//char c;
+
+	stringstream tmpString(inputStr);
+	stringstream changeString;
+	//stringstream cmpString;
+	string subString;
+	while (getline(tmpString, subString, ' '))   //把inputStr 利用空格分割並存在 subString
+	{
+		stringstream cmpString(subString);          //判斷subString是否為數字,若否,則return -1
+		double d;
+		char c;
+		if (!(cmpString >> d))
+		{
+			return -1;
+		}
+		if (cmpString >> c)
+		{
+			return -1;
+		}
+
+		arr[subStringCnt]=atoi(subString.c_str());  //subString 為數字,存入array等待sorting
+		subStringCnt++;
+	}
+
+	sort(arr, arr + subStringCnt);
+
+	/*for (int i = 0; i < subStringCnt; i++)
+	{
+		cout << "Num:" << i << " is " << arr[i] << endl;
+	}*/
+	
+	changeString << arr[0];
+	changeString >> subString;
+	inputStr = subString;
+
+	for (int i=1; i<subStringCnt; i++)   //把切割出的數字轉成字串再串接起來
+	{
+		changeString.str("");
+		changeString.clear();
+		changeString << arr[i];
+		changeString >> subString;
+		inputStr = inputStr + " " + subString;
+	}
 
 	return 0;
 }
@@ -36,6 +83,28 @@ int getAscendingStr(string& inputStr)
 //          (return vector size should be 0)
 int solveQ(vector<double> &x, double a, double b, double c)
 {
+	int delta = ((b*b) - (4 * a*c));
+
+	if (delta > 0)
+	{
+		int solve1 = ((((-1)*b) + sqrt(delta)) / (2 * a));
+		int solve2 = ((((-1)*b) - sqrt(delta)) / (2 * a));
+		x.push_back(solve1);
+		x.push_back(solve2);
+
+		return 1;
+	}
+	else if (delta == 0)
+	{
+		int solve1 = ((((-1)*b) + sqrt(delta)) / (2 * a));
+		x.push_back(solve1);
+		return 0;
+	}
+	else
+	{
+
+		return -1;
+	}
 
 	return 0;
 }
