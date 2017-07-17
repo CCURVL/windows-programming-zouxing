@@ -20,14 +20,12 @@ int getAscendingStr(string& inputStr)
 {
 	/// Please fill your code here
 
-	int arr[10];
+	vector<int>arr;
 	int subStringCnt =0;
-	//double d;
-	//char c;
 
 	stringstream tmpString(inputStr);
 	stringstream changeString;
-	//stringstream cmpString;
+
 	string subString;
 	while (getline(tmpString, subString, ' '))   //把inputStr 利用空格分割並存在 subString
 	{
@@ -43,11 +41,11 @@ int getAscendingStr(string& inputStr)
 			return -1;
 		}
 
-		arr[subStringCnt]=atoi(subString.c_str());  //subString 為數字,存入array等待sorting
+		arr.push_back(atoi(subString.c_str())) ;    //subString 為數字,存入array等待sorting
 		subStringCnt++;
 	}
 
-	sort(arr, arr + subStringCnt);
+	sort(arr.begin(),arr.end());           //排序
 
 	/*for (int i = 0; i < subStringCnt; i++)
 	{
