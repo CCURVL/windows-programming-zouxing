@@ -20,47 +20,51 @@ int getAscendingStr(string& inputStr)
 {
 	/// Please fill your code here
 
-	vector<int>arr;
-	int subStringCnt =0;
+	vector<int>Varr;
 
 	stringstream tmpString(inputStr);
 	stringstream changeString;
-
 	string subString;
+
 	while (getline(tmpString, subString, ' '))   //把inputStr 利用空格分割並存在 subString
-	{
-		stringstream cmpString(subString);          //判斷subString是否為數字,若否,則return -1
-		double d;
-		char c;
-		if (!(cmpString >> d))
-		{
-			return -1;
-		}
-		if (cmpString >> c)
-		{
-			return -1;
-		}
-
-		arr.push_back(atoi(subString.c_str())) ;    //subString 為數字,存入array等待sorting
-		subStringCnt++;
-	}
-
-	sort(arr.begin(),arr.end());           //排序
-
-	/*for (int i = 0; i < subStringCnt; i++)
-	{
-		cout << "Num:" << i << " is " << arr[i] << endl;
-	}*/
-	
-	changeString << arr[0];
-	changeString >> subString;
-	inputStr = subString;
-
-	for (int i=1; i<subStringCnt; i++)   //把切割出的數字轉成字串再串接起來
 	{
 		changeString.str("");
 		changeString.clear();
-		changeString << arr[i];
+		changeString<<subString;          //判斷subString是否為數字,若否,則return -1
+		
+		double d;
+		char c;
+		if (!(changeString >> d))
+		{
+			return -1;
+		}
+		if (changeString >> c)
+		{
+			return -1;
+		}
+
+		int stringToInt;
+
+		changeString.str("");				//subString 為數字,存入vector等待sorting
+		changeString.clear();
+		changeString << subString;
+		changeString >> stringToInt;
+		Varr.push_back(stringToInt) ;    
+	}
+
+	sort(Varr.begin(),Varr.end());           //排序
+
+	changeString.str("");
+	changeString.clear();
+	changeString << Varr[0];
+	changeString >> subString;
+	inputStr = subString;
+
+	for (int i=1; i<Varr.size(); i++)   //把切割出的數字轉成字串再串接起來
+	{
+		changeString.str("");
+		changeString.clear();
+		changeString << Varr[i];
 		changeString >> subString;
 		inputStr = inputStr + " " + subString;
 	}
